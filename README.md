@@ -12,7 +12,9 @@ With this package, navigating the calendar and selecting dates becomes a piece o
 
 The only two required arguments are the `calendarStartDate` and `calendarEndDate`.
 
+|                                                                                                   |
 | The difference between `calendarStartDate` and `calendarEndDate` in days should be greater than 0 |
+|                                                                                                   |
 
 ```dart
     import 'package:multi_date_picker/multi_date_picker.dart';
