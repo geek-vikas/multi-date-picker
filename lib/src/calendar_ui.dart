@@ -4,13 +4,19 @@ class _CalendarUI extends ConsumerStatefulWidget {
   const _CalendarUI({
     required this.dates,
     required this.enableMultiSelect,
+    required this.enableListener,
     required this.onDateSelected,
+    required this.calendarStyle,
+    this.selectedDates,
     this.scrollController,
   });
   final List<GroupedDatesByYear> dates;
   final bool enableMultiSelect;
+  final bool enableListener;
   final ScrollController? scrollController;
+  final List<DateTime>? selectedDates;
   final Function(List<DateTime>)? onDateSelected;
+  final CalendarStyleConfiguration? calendarStyle;
 
   @override
   ConsumerState<_CalendarUI> createState() => _CalendarUIState();
@@ -23,37 +29,51 @@ class _CalendarUIState extends ConsumerState<_CalendarUI> {
   void initState() {
     calendarController = CalendarController.instance;
     scrollController = ScrollController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(selectionProvider.notifier)
+          .setInitialDates(widget.selectedDates);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(selectionProvider, _selectionListener);
+    if (widget.enableListener) {
+      ref.listen(selectionProvider, _selectionListener);
+    }
 
-    return ListView.builder(
-      controller: widget.scrollController ?? scrollController,
-      itemCount: widget.dates.length,
-      itemBuilder: (_, int yearIndex) {
-        final GroupedDatesByYear yearDates = widget.dates[yearIndex];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              yearDates.year.toString(),
-              style: const TextStyle(
-                fontSize: 27,
-                color: Color(0xFF204D6C),
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            _MonthWidget(
-              months: yearDates.months,
-              calendarController: calendarController,
-              enableMultiSelect: widget.enableMultiSelect,
-            )
-          ],
-        );
-      },
+    return Stack(
+      children: <Widget>[
+        ListView.builder(
+          controller: widget.scrollController ?? scrollController,
+          itemCount: widget.dates.length,
+          itemBuilder: (_, int yearIndex) {
+            final GroupedDatesByYear yearDates = widget.dates[yearIndex];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  yearDates.year.toString(),
+                  style: widget.calendarStyle?.yearTextStyle ??
+                      CalendarStyleConfiguration.defaultStyle.yearTextStyle,
+                ),
+                _MonthWidget(
+                  months: yearDates.months,
+                  calendarController: calendarController,
+                  enableMultiSelect: widget.enableMultiSelect,
+                  calendarStyle: widget.calendarStyle,
+                )
+              ],
+            );
+          },
+        ),
+        Button(
+          onDateSelected: widget.onDateSelected,
+          style: widget.calendarStyle,
+        )
+      ],
     );
   }
 
@@ -70,11 +90,13 @@ class _MonthWidget extends StatelessWidget {
     required this.months,
     required this.calendarController,
     required this.enableMultiSelect,
+    required this.calendarStyle,
   });
 
   final List<GroupedDatesByMonth> months;
   final CalendarController calendarController;
   final bool enableMultiSelect;
+  final CalendarStyleConfiguration? calendarStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -91,16 +113,14 @@ class _MonthWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               calendarController.getMonthName(months[monthIndex].month),
-              style: const TextStyle(
-                fontSize: 21,
-                color: Color(0XFF252B5C),
-                fontFamily: 'DMSans',
-              ),
+              style: calendarStyle?.monthTextStyle ??
+                  CalendarStyleConfiguration.defaultStyle.monthTextStyle,
             ),
             const SizedBox(height: 10),
             _DatesWidget(
               dates: dates,
               enableMultiSelect: enableMultiSelect,
+              calendarStyle: calendarStyle,
             ),
           ],
         );
@@ -113,9 +133,11 @@ class _DatesWidget extends ConsumerStatefulWidget {
   const _DatesWidget({
     required this.dates,
     required this.enableMultiSelect,
+    required this.calendarStyle,
   });
   final List<DateTime> dates;
   final bool enableMultiSelect;
+  final CalendarStyleConfiguration? calendarStyle;
 
   @override
   ConsumerState<_DatesWidget> createState() => _DatesWidgetState();
@@ -123,9 +145,11 @@ class _DatesWidget extends ConsumerStatefulWidget {
 
 class _DatesWidgetState extends ConsumerState<_DatesWidget> {
   late CalendarController calendarController;
+  late CalendarStyleConfiguration defaultStyle;
   @override
   void initState() {
     calendarController = CalendarController.instance;
+    defaultStyle = CalendarStyleConfiguration.defaultStyle;
     super.initState();
   }
 
@@ -148,20 +172,21 @@ class _DatesWidgetState extends ConsumerState<_DatesWidget> {
           return GestureDetector(
             onTap: () => _onDateTap(date),
             child: CircleAvatar(
-              backgroundColor:
-                  isSelected ? const Color(0xFF204D6C) : Colors.transparent,
+              backgroundColor: isSelected
+                  ? widget.calendarStyle?.selectionColor ??
+                      defaultStyle.selectionColor
+                  : Colors.transparent,
               radius: 4,
               child: Text(
                 date.day.toString(),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: calendarController.isAvailableForSelection(date)
-                      ? isSelected
-                          ? Colors.white
-                          : const Color(0xFF204D6C)
-                      : const Color(0xFF204D6C).withOpacity(0.2),
-                  fontWeight: FontWeight.w600,
-                ),
+                style: calendarController.isAvailableForSelection(date)
+                    ? isSelected
+                        ? widget.calendarStyle?.selectedDateStyle ??
+                            defaultStyle.selectedDateStyle
+                        : widget.calendarStyle?.unselectedDateStyle ??
+                            defaultStyle.unselectedDateStyle
+                    : widget.calendarStyle?.dateTextStyle ??
+                        defaultStyle.dateTextStyle,
               ),
             ),
           );

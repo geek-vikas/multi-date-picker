@@ -39,8 +39,21 @@ class _MyHomePageState extends State<MyHomePage> {
         initialDate: DateTime.now(),
         startDate: DateTime.now().subtract(const Duration(days: 30)),
         endDate: DateTime.now().add(const Duration(days: 30)),
-        datesToExclude: const <DateTime>[],
+        calendarStyleConfiguration: CalendarStyleConfiguration(
+          backgroundColor: Colors.grey.shade800,
+        ),
+        // datesToExclude: <DateTime>[
+        //   DateTime.now().add(const Duration(days: 1)),
+        //   DateTime.now().add(const Duration(days: 3)),
+        // ],
+        
+        selectedDates: <DateTime>[
+          DateTime.now().add(const Duration(days: 1)),
+          DateTime.now().add(const Duration(days: 2)),
+          DateTime.now().add(const Duration(days: 3)),
+        ],
         enableMultiSelect: true,
+        enableListener: false,
         onDateSelected: (List<DateTime> dates) {
           log('$dates');
         },

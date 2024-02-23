@@ -3,8 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'controller/export.dart';
 import 'models/export.dart';
+import 'utilities/export.dart';
 
 part 'calendar_ui.dart';
+part 'models/button_style_configuration.dart';
+part 'models/calendar_style_configuration.dart';
 
 class MultiDatePicker extends StatefulWidget {
   MultiDatePicker({
@@ -15,7 +18,9 @@ class MultiDatePicker extends StatefulWidget {
     this.startDate,
     this.endDate,
     this.onDateSelected,
+    this.selectedDates,
     this.datesToExclude,
+    this.calendarStyleConfiguration,
     this.scrollController,
     this.enableListener = true,
     this.enableMultiSelect = false,
@@ -41,6 +46,9 @@ class MultiDatePicker extends StatefulWidget {
   /// By default this will be equal to `calendarEndDate`.
   final DateTime? endDate;
 
+  /// `selectedDates` is a list of dates that are already selected .
+  final List<DateTime>? selectedDates;
+
   /// `datesToExclude` is a list of dates that will be refrained from selection.
   /// If `datesToExclude` is null, all dates between `startDate` and `endDate` will be available for selection.
   final List<DateTime>? datesToExclude;
@@ -64,6 +72,9 @@ class MultiDatePicker extends StatefulWidget {
   /// If you want to change this behavior you can use `enableListener` to `false`.
   /// Then a confirm button will be shown to get the selected dates.
   final Function(List<DateTime>)? onDateSelected;
+
+  /// `calendarStyleConfiguration` is the style configuration for the calendar.
+  final CalendarStyleConfiguration? calendarStyleConfiguration;
 
   @override
   State<MultiDatePicker> createState() => _CalendarDateSelectorState();
@@ -95,8 +106,11 @@ class _CalendarDateSelectorState extends State<MultiDatePicker> {
       child: _CalendarUI(
         dates: calendarController.calendarDates,
         enableMultiSelect: widget.enableMultiSelect,
+        enableListener: widget.enableListener,
         scrollController: widget.scrollController,
+        selectedDates: widget.selectedDates,
         onDateSelected: widget.onDateSelected,
+        calendarStyle: widget.calendarStyleConfiguration,
       ),
     );
   }
