@@ -1,0 +1,13 @@
+include: package:flutter_lints/flutter.yaml
+analyzer:
+  exclude:
+    - "**.g.dart"
+    - "**.mocks.dart"
+linter:
+  rules:
+    prefer_single_quotes: true
+    prefer_relative_imports: false
+    avoid_print: true
+    prefer_const_declarations: true
+    always_specify_types: true
+    always_declare_return_types: true
