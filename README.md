@@ -21,7 +21,7 @@ The difference between `calendarStartDate` and `calendarEndDate` in days should 
         calendarEndDate: DateTime(2024, 4, 30),
     )
 ```
-<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/b372e3c1-841e-4cd1-9e61-ea456cc45dea" alt="drawing" width="200"/>
+<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/b372e3c1-841e-4cd1-9e61-ea456cc45dea" width="200"/>
 
 ### User more parameters to change -- usability, look, and feel of it.
 
@@ -56,7 +56,7 @@ With this in place, you can almost implement every requirement.
         onDateSelected: (List<DateTime> dates) {},
     ),
 ```
-<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/96c8fdce-feb3-4b1b-b5be-d7544a0e2419" alt="drawing" width="200"/>
+<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/96c8fdce-feb3-4b1b-b5be-d7544a0e2419" width="200"/>
 
 ## Available properties
 
