@@ -21,10 +21,11 @@ The difference between `calendarStartDate` and `calendarEndDate` in days should 
         calendarEndDate: DateTime(2024, 4, 30),
     )
 ```
+<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/b372e3c1-841e-4cd1-9e61-ea456cc45dea" alt="drawing" width="200"/>
 
-### User more parmater to change -- usablity, look, and feel of it.
+### User more parameters to change -- usability, look, and feel of it.
 
-Rest of the parameters are optional
+The rest of the parameters are optional
 
 `startDate`
 `endDate`
@@ -32,7 +33,7 @@ Rest of the parameters are optional
 `selectedDates`
 `enableMultiSelect`
 
-With this in place you can almost implement every requirement.
+With this in place, you can almost implement every requirement.
 
 ```dart
    import 'package:multi_date_picker/multi_date_picker.dart';
@@ -55,6 +56,7 @@ With this in place you can almost implement every requirement.
         onDateSelected: (List<DateTime> dates) {},
     ),
 ```
+<img src="https://github.com/geek-vikas/multi-date-picker/assets/95428049/96c8fdce-feb3-4b1b-b5be-d7544a0e2419" alt="drawing" width="200"/>
 
 ## Available properties
 
@@ -62,24 +64,24 @@ With this in place you can almost implement every requirement.
 | ---------------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `calendarStartDate`          | DateTime                    | This is the date from which the calendar is starting.                                                            |
 | `calendarEndDate`            | DateTime                    | This is the date at which the calendar is ending.                                                                |
-| `startDate`                  | DateTime?                   | This is the date from which user will be able to select the date.                                                |
-| `endDate`                    | DateTime?                   | This is the date after which user will not be able to select any date.                                           |
-| `onDateSelected`             | Function(List<DateTime>)?   | This is the callback which will we triggered for the selected dates.                                             |
+| `startDate`                  | DateTime?                   | This is the date from which the user will be able to select the date.                                            |
+| `endDate`                    | DateTime?                   | This is the date after which the user will not be able to select any date.                                       |
+| `onDateSelected`             | Function(List<DateTime>)?   | This is the callback that will we trigger for the selected dates.                                                |
 | `selectedDates`              | List<DateTime>?             | There are the already selected dates.                                                                            |
-| `datesToExclude`             | List<DateTime>?             | There are the dates that you want to exclde from the available dates to select.                                  |
-| `calendarStyleConfiguration`  | CalendarStyleConfiguration?  | Use this object to style your calendar.                                                                          |
+| `datesToExclude`             | List<DateTime>?             | There are the dates that you want to exclude from the available dates to select.                                 |
+| `calendarStyleConfiguration` | CalendarStyleConfiguration? | Use this object to style your calendar.                                                                          |
 | `enableListener`             | bool?                       | <br>By default this will be true and this will call `onDateSelected` for every date selected<br>                 |
-| `enableMultiSelect`          | bool?                       | Set this to true to enable multi select                                                                          |
+| `enableMultiSelect`          | bool?                       | Set this to true to enable multi-select                                                                          |
 
 ## Upcoming changes
 
 - Enable drag to select
-- Range selection. Like: when user has to select a download a bank statement and they have to select a from and to.
+- Range selection. For: Like when the user has to select a download bank statement they have to select a from and to.
 - Using app theme as default style configuration.
-- More customization option.
+- More customization options.
 - Tap on year to change the current year.
-- Allowing more control over the scroll behaviour.
-- Introducing different layout to view the calendar.
+- Allowing more control over the scroll behavior.
+- Introducing different layouts to view the calendar.
 
 ## Author
 
