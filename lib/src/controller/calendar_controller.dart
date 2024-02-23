@@ -1,6 +1,5 @@
-import 'package:calendar_date_picker/src/utilities/extensions/on_list.dart';
-
 import '../models/export.dart';
+import '../utilities/extensions/on_list.dart';
 
 class CalendarController {
   CalendarController._();

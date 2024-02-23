@@ -14,7 +14,7 @@ class MultiDatePicker extends StatefulWidget {
     super.key,
     required this.calendarStartDate,
     required this.calendarEndDate,
-    required this.initialDate,
+    this.initialDate,
     this.startDate,
     this.endDate,
     this.onDateSelected,
@@ -36,7 +36,7 @@ class MultiDatePicker extends StatefulWidget {
   final DateTime calendarEndDate;
 
   /// `initialDate` is the date from where the calendar view will start.
-  final DateTime initialDate;
+  final DateTime? initialDate;
 
   /// `startDate` is the start date of calendar. Starting where the dates will be enabled.
   /// By default this will be equal to `calendarStartDate`.

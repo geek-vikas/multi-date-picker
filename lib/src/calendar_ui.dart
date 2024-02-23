@@ -69,10 +69,11 @@ class _CalendarUIState extends ConsumerState<_CalendarUI> {
             );
           },
         ),
-        Button(
-          onDateSelected: widget.onDateSelected,
-          style: widget.calendarStyle,
-        )
+        if (!widget.enableListener)
+          Button(
+            onDateSelected: widget.onDateSelected,
+            style: widget.calendarStyle,
+          )
       ],
     );
   }
